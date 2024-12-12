@@ -125,6 +125,10 @@ END
 
 yes "Y" | apt install --reinstall network-manager-gnome
 
+# auto login
+sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.config
+sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
+
 # let network-manager handle all network interfaces
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 sed -i 's/managed=false/managed=true/' /etc/NetworkManager/NetworkManager.conf
