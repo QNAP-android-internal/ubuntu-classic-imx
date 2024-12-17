@@ -4,12 +4,14 @@
 
 TOP=${PWD}
 
+# Set DISTRO from the first argument, default to "jammy" if not provided
+DISTRO=${1:-jammy}
+
 # generate rootfs
 gen_pure_rootfs() {
 
   ARCH=armhf
   QEMU=qemu-arm-static
-  DISTRO=jammy
 
   mkdir rootfs
 
@@ -22,7 +24,7 @@ gen_pure_rootfs() {
   sudo cp -rv ${TOP}/deb/ ${TOP}/rootfs/opt/
   sync
 
-  sudo LANG=C chroot ${TOP}/rootfs /bin/bash -c "chmod a+x /usr/bin/qemu_install.sh; /usr/bin/qemu_install.sh"
+  sudo LANG=C chroot ${TOP}/rootfs /bin/bash -c "chmod a+x /usr/bin/qemu_install.sh; /usr/bin/qemu_install.sh $DISTRO"
   sync
 
   sudo rm -rf ${TOP}/rootfs/usr/bin/qemu_install.sh
