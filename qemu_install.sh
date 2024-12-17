@@ -2,6 +2,8 @@
 # Author: Wig Cheng <onlywig@gmail.com>
 # Date: 12/11/2024
 
+DISTRO=$1
+
 COL_GREEN="\e[1;32m"
 COL_NORMAL="\e[m"
 
@@ -21,11 +23,11 @@ echo "${COL_GREEN}apt-get server upgrading...${COL_NORMAL}"
 touch /etc/apt/sources.list
 # apt-get source adding
 cat <<END > /etc/apt/sources.list
-deb http://ports.ubuntu.com/ubuntu-ports/ jammy main
-deb http://ports.ubuntu.com/ubuntu-ports/ jammy universe
-deb http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse
-deb http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main
-deb http://ports.ubuntu.com/ubuntu-ports/ jammy-security main
+deb http://ports.ubuntu.com/ubuntu-ports/ $DISTRO main
+deb http://ports.ubuntu.com/ubuntu-ports/ $DISTRO universe
+deb http://ports.ubuntu.com/ubuntu-ports/ $DISTRO multiverse
+deb http://ports.ubuntu.com/ubuntu-ports/ $DISTRO-backports main
+deb http://ports.ubuntu.com/ubuntu-ports/ $DISTRO-security main
 END
 
 
