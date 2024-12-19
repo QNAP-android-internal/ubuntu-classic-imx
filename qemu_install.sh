@@ -66,7 +66,30 @@ ctl.!default {
 END
 
 # GUI desktop support
-apt -y install xfce4 slim fluxbox onboard xterm xfce4-screenshooter rfkill alsa-utils minicom strace
+apt -y install xfce4 fluxbox onboard xterm xfce4-screenshooter rfkill alsa-utils minicom strace
+if [[ "$DISTRO" == "jammy" ]]; then
+    apt -y install slim
+    # auto login
+    sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.config
+    sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
+else
+    apt -y install lightdm
+    sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''sudo touch /run/utmp && sudo chmod 664 /run/utmp && sudo chown root:utmp /run/utmp'\''' /lib/systemd/system/lightdm.service
+    sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''rm -rf /home/ubuntu/.local/share/keyrings'\''' /lib/systemd/system/lightdm.service
+
+# auto login
+cat <<END > /etc/lightdm/lightdm.conf
+[SeatDefaults]
+autologin-user=ubuntu
+autologin-user-timeout=5
+END
+
+    rm -rf /usr/share/xsessions/fluxbox.desktop
+    cp -a /usr/share/xsessions/xfce.desktop /usr/share/xsessions/ubuntu.desktop
+    usermod -aG nopasswdlogin ubuntu
+    sed -i 's/^-auth    optional        pam_gnome_keyring\.so/#auth    optional        pam_gnome_keyring.so/' /etc/pam.d/lightdm-greeter
+    sed -i 's/^-session optional        pam_gnome_keyring\.so auto_start/#session optional        pam_gnome_keyring.so auto_start/' /etc/pam.d/lightdm-greeter
+fi
 
 # Install ubuntu-restricted-extras
 echo steam steam/license note '' | sudo debconf-set-selections
@@ -126,10 +149,6 @@ cat <<END > /home/ubuntu/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 END
 
 yes "Y" | apt install --reinstall network-manager-gnome
-
-# auto login
-sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.config
-sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
 
 # let network-manager handle all network interfaces
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
