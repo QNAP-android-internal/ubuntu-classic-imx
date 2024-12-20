@@ -83,7 +83,7 @@ apt -y install xfce4 fluxbox onboard xterm xfce4-screenshooter rfkill alsa-utils
 if [[ "$DISTRO" == "jammy" ]]; then
     apt -y install slim
     # auto login
-    sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.config
+    sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.conf
     sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
 else
     apt -y install lightdm
