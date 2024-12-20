@@ -3,6 +3,7 @@
 # Date: 12/11/2024
 
 DISTRO=$1
+LANGUAGE=$2
 
 COL_GREEN="\e[1;32m"
 COL_NORMAL="\e[m"
@@ -40,6 +41,18 @@ apt -y install bash-completion ifupdown resolvconf alsa-utils gpiod cloud-utils 
 # for teamviewer and anydesk
 apt -y install libpolkit-gobject-1-0:armhf libraspberrypi0:armhf libraspberrypi-dev:armhf libraspberrypi-bin:armhf libgles-dev:armhf libegl-dev:armhf
 apt -y install libegl1-mesa libgail-common libgail18 libgtk2.0-0 libgtk2.0-bin libgtk2.0-common libpango1.0-0
+
+# for multiple languages
+apt -y install language-selector-gnome
+if [[ "$LANGUAGE" == "zh-hant" ]]; then
+	apt -y install language-pack-zh-hant language-pack-gnome-zh-hant fonts-noto-cjk
+	locale-gen zh_TW.UTF-8
+	update-locale LANG=zh_TW.UTF-8
+elif [[ "$LANGUAGE" == "japanese" ]]; then
+	apt -y install language-pack-ja language-pack-gnome-ja fonts-noto-cjk fonts-takao
+	locale-gen ja_JP.UTF-8
+	update-locale LANG=ja_JP.UTF-8
+fi
 
 # X11 setting
 cat <<END > /etc/X11/xorg.conf
