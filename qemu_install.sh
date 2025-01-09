@@ -57,9 +57,14 @@ fi
 # X11 setting
 cat <<END > /etc/X11/xorg.conf
 Section "Device"
-Identifier "DRM Device"
-Driver "modesetting"
-Option "kmsdev" "/dev/dri/card1"
+Identifier  "Framebuffer Device"
+Driver      "fbdev"
+Option      "fbdev"   "/dev/fb0"
+EndSection
+
+Section "Screen"
+Identifier "Screen0"
+Device     "Framebuffer Device"
 EndSection
 END
 
