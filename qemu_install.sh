@@ -90,6 +90,11 @@ if [[ "$DISTRO" == "jammy" ]]; then
     # auto login
     sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.conf
     sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
+
+    # NPU necessary libs
+    apt -y install curl python3-setuptools python3-numpy python3-pil python3-opencv python3-pip
+    pip3 install cython
+    pip3 install tflite-runtime==2.13.0
 else
     apt -y install lightdm
     sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''sudo touch /run/utmp && sudo chmod 664 /run/utmp && sudo chown root:utmp /run/utmp'\''' /lib/systemd/system/lightdm.service
