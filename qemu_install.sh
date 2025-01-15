@@ -100,6 +100,15 @@ else
     sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''sudo touch /run/utmp && sudo chmod 664 /run/utmp && sudo chown root:utmp /run/utmp'\''' /lib/systemd/system/lightdm.service
     sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''rm -rf /home/ubuntu/.local/share/keyrings'\''' /lib/systemd/system/lightdm.service
 
+    #NPU necessary packages and libs
+    add-apt-repository -y ppa:deadsnakes/ppa
+    apt -y install python3.10 python3.10-dev python3-pip curl
+    apt -y install build-essential libjpeg-dev zlib1g-dev libopenjp2-7-dev libtiff-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev libimagequant-dev libraqm-dev
+
+    python3.10 -m pip install --break-system-packages numpy==1.21.5
+    python3.10 -m pip install --break-system-packages pillow
+    python3.10 -m pip install --break-system-packages tflite-runtime==2.13.0
+
 # auto login
 cat <<END > /etc/lightdm/lightdm.conf
 [SeatDefaults]
