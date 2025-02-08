@@ -95,6 +95,11 @@ if [[ "$DISTRO" == "jammy" ]]; then
     apt -y install curl python3-setuptools python3-numpy python3-pil python3-opencv python3-pip
     pip3 install cython
     pip3 install tflite-runtime==2.13.0
+
+    # ajenti device management webUI
+    curl -o ajenti_install.sh https://raw.githubusercontent.com/ajenti/ajenti/master/scripts/install.sh
+    bash ./ajenti_install.sh
+    rm -rf ./ajenti_install.sh
 else
     apt -y install lightdm
     sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''sudo touch /run/utmp && sudo chmod 664 /run/utmp && sudo chown root:utmp /run/utmp'\''' /lib/systemd/system/lightdm.service
