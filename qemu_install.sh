@@ -84,13 +84,19 @@ ctl.!default {
 END
 
 # GUI desktop support
-apt -y install xfce4 fluxbox onboard xterm xfce4-screenshooter rfkill alsa-utils minicom strace
 if [[ "$DISTRO" == "jammy" ]]; then
-    apt -y install slim
-    # auto login
-    sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.conf
-    sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
+    apt -y install xfce4
+elif [[ "$DISTRO" == "noble" ]]; then
+    apt -y install lxqt
+fi
 
+apt -y install fluxbox onboard xterm xfce4-screenshooter rfkill alsa-utils minicom strace
+apt -y install slim
+# auto login
+sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.conf
+sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
+
+if [[ "$DISTRO" == "jammy" ]]; then
     # NPU necessary libs
     apt -y install curl python3-setuptools python3-numpy python3-pil python3-opencv python3-pip
     pip3 install cython
@@ -101,10 +107,6 @@ if [[ "$DISTRO" == "jammy" ]]; then
     bash ./ajenti_install.sh
     rm -rf ./ajenti_install.sh
 else
-    apt -y install lightdm
-    sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''sudo touch /run/utmp && sudo chmod 664 /run/utmp && sudo chown root:utmp /run/utmp'\''' /lib/systemd/system/lightdm.service
-    sed -i '/ExecStartPre=.*lightdm.*/a ExecStartPre=/bin/sh -c '\''rm -rf /home/ubuntu/.local/share/keyrings'\''' /lib/systemd/system/lightdm.service
-
     #NPU necessary packages and libs
     add-apt-repository -y ppa:deadsnakes/ppa
     apt -y install python3.10 python3.10-dev python3-pip curl
@@ -114,19 +116,11 @@ else
     python3.10 -m pip install --break-system-packages pillow
     python3.10 -m pip install --break-system-packages tflite-runtime==2.13.0
 
-# auto login
-cat <<END > /etc/lightdm/lightdm.conf
-[SeatDefaults]
-autologin-user=ubuntu
-autologin-user-timeout=5
-END
-
-    rm -rf /usr/share/xsessions/fluxbox.desktop
-    cp -a /usr/share/xsessions/xfce.desktop /usr/share/xsessions/ubuntu.desktop
-    usermod -aG nopasswdlogin ubuntu
-    sed -i 's/^-auth    optional        pam_gnome_keyring\.so/#auth    optional        pam_gnome_keyring.so/' /etc/pam.d/lightdm-greeter
-    sed -i 's/^-session optional        pam_gnome_keyring\.so auto_start/#session optional        pam_gnome_keyring.so auto_start/' /etc/pam.d/lightdm-greeter
+    wget https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/3X/6/3/63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg
+    mv 63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg /home/ubuntu/wallpaper.jpeg
 fi
+
+rm -rf /usr/share/xsessions/fluxbox.desktop
 
 # Install ubuntu-restricted-extras
 echo steam steam/license note '' | sudo debconf-set-selections
