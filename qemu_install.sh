@@ -116,6 +116,19 @@ else
     python3.10 -m pip install --break-system-packages pillow
     python3.10 -m pip install --break-system-packages tflite-runtime==2.13.0
 
+    # IMX93 NPU used
+    apt -y install git
+    git clone https://github.com/nxp-imx/ethos-u-vela.git
+    cd ethos-u-vela
+    git checkout lf-6.6.36_2.1.0
+    python3.12 -m pip install --break-system-packages .
+    cd -
+    rm -rf ethos-u-vela
+
+    python3.12 -m pip install --break-system-packages numpy==1.26.4
+    python3.12 -m pip install --break-system-packages pillow==10.3.0
+
+
     wget https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/3X/6/3/63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg
     mv 63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg /home/ubuntu/wallpaper.jpeg
 fi
