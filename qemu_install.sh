@@ -2,16 +2,17 @@
 # Author: Wig Cheng <onlywig@gmail.com>
 # Date: 12/11/2024
 
-DISTRO=$1
-LANGUAGE=$2
+PLATFORM=$1
+DISTRO=$2
+LANGUAGE=$3
 
 COL_GREEN="\e[1;32m"
 COL_NORMAL="\e[m"
 
-echo "${COL_GREEN}Technexion customized minimal rootfs staring...${COL_NORMAL}"
+echo "${COL_GREEN}IEI customized minimal rootfs staring...${COL_NORMAL}"
 echo "${COL_GREEN}creating ubuntu sudoer account...${COL_NORMAL}"
 cd /
-echo wafer-imx8mp > /etc/hostname
+echo $PLATFORM > /etc/hostname
 echo -e "127.0.1.1\twafer-imx8mp" >> /etc/hosts
 echo -e "nameserver\t8.8.8.8" >> /etc/hosts
 
