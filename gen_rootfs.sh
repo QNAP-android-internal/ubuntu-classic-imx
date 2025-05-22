@@ -4,16 +4,19 @@
 
 TOP=${PWD}
 
-# Set DISTRO from the first argument, default to "jammy" if not provided
-DISTRO=${1:-jammy}
-# Set LANGUAGE from the second argument, default to "C" if not provided
-LANGUAGE=${2:-C}
+# Set PLATFORM from 1st argument, default to "frdm-imx93" if not provided
+PLATFORM=${1:-frdm-imx93}
+
+# Set DISTRO from the 2nd argument, default to "jammy" if not provided
+DISTRO=${2:-jammy}
+# Set LANGUAGE from the 3rd argument, default to "C" if not provided
+LANGUAGE=${3:-C}
 
 # generate rootfs
 gen_pure_rootfs() {
 
-  ARCH=armhf
-  QEMU=qemu-arm-static
+  ARCH=arm64
+  QEMU=qemu-aarch64-static
 
   mkdir rootfs
 
@@ -26,7 +29,8 @@ gen_pure_rootfs() {
   sudo cp -rv ${TOP}/deb/ ${TOP}/rootfs/opt/
   sync
 
-  sudo LANG=C chroot ${TOP}/rootfs /bin/bash -c "chmod a+x /usr/bin/qemu_install.sh; /usr/bin/qemu_install.sh $DISTRO $LANGUAGE"
+  sudo LANG=C chroot ${TOP}/rootfs /bin/bash -c "chmod a+x /usr/bin/qemu_install.sh; /usr/bin/qemu_install.sh $PLATFORM $DISTRO $LANGUAGE"
+
   sync
 
   sudo rm -rf ${TOP}/rootfs/usr/bin/qemu_install.sh
