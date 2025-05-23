@@ -13,8 +13,9 @@ echo "${COL_GREEN}IEI customized minimal rootfs staring...${COL_NORMAL}"
 echo "${COL_GREEN}creating ubuntu sudoer account...${COL_NORMAL}"
 cd /
 echo $PLATFORM > /etc/hostname
-echo -e "127.0.1.1\twafer-imx8mp" >> /etc/hosts
-echo -e "nameserver\t8.8.8.8" >> /etc/hosts
+echo -e "127.0.1.1\t $PLATFORM" >> /etc/hosts
+echo -e "nameserver\t8.8.8.8" >> /etc/resolv.conf
+echo -e "nameserver\t8.8.4.4" >> /etc/resolv.conf
 
 (echo "root"; echo "root";) | passwd
 (echo "ubuntu"; echo "ubuntu"; echo;) | adduser ubuntu
