@@ -25,15 +25,20 @@ gen_pure_rootfs() {
   sudo cp /usr/bin/"$QEMU" ${TOP}/rootfs/usr/bin
   sudo LANG=C chroot ${TOP}/rootfs /debootstrap/debootstrap --second-stage
 
-  sudo cp ${TOP}/qemu_install.sh ${TOP}/rootfs/usr/bin/
-  sudo cp -rv ${TOP}/deb/ ${TOP}/rootfs/opt/
+  if [[ $PLATFORM == "wafer-imx8mp" ]]; then
+    # vivante libraries
+    sudo cp -a ${TOP}/libs_overlay/gpu_libs/imx8mp/kernel-6.6.23/imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/ ${TOP}/rootfs/
+    sudo cp -a ${TOP}/libs_overlay/gpu_libs/imx8mp/kernel-6.6.23/imx-gpu-viv-6.4.11.p2.6-aarch64-bc7b6a2/ ${TOP}/rootfs/
+    sync
+    QEMU_FILE="qemu_install-weston.sh"
+  else
+    QEMU_FILE="qemu_install.sh"
+  fi
+
+  sudo cp ${TOP}/${QEMU_FILE} ${TOP}/rootfs/usr/bin/
+  sudo LANG=C chroot ${TOP}/rootfs /bin/bash -c "chmod a+x /usr/bin/${QEMU_FILE}; /usr/bin/${QEMU_FILE} $PLATFORM $DISTRO $LANGUAGE"
   sync
-
-  sudo LANG=C chroot ${TOP}/rootfs /bin/bash -c "chmod a+x /usr/bin/qemu_install.sh; /usr/bin/qemu_install.sh $PLATFORM $DISTRO $LANGUAGE"
-
-  sync
-
-  sudo rm -rf ${TOP}/rootfs/usr/bin/qemu_install.sh
+  sudo rm -rf ${TOP}/rootfs/usr/bin/${QEMU_FILE}
 
   cd ${TOP}/rootfs
   sudo tar --exclude='./dev/*' --exclude='./lost+found' --exclude='./mnt/*' --exclude='./media/*' --exclude='./proc/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./tmp/*' --numeric-owner -czpvf ../rootfs.tgz .
