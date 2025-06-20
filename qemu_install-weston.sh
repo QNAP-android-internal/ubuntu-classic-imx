@@ -2,8 +2,6 @@
 # Author: Wig Cheng <onlywig@gmail.com>
 # Date: 06/05/2025
 
-set -e
-
 PLATFORM=$1
 DISTRO=$2
 LANGUAGE=$3
