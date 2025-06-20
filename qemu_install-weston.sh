@@ -46,6 +46,10 @@ apt -y install bash-completion ifupdown resolvconf alsa-utils gpiod cloud-utils 
 apt -y install libudev-dev libinput-dev libxkbcommon-dev libpam0g-dev libx11-xcb-dev libxcb-xfixes0-dev libxcb-composite0-dev libxcursor-dev libxcb-shape0-dev libdbus-1-dev libdbus-glib-1-dev libsystemd-dev libpixman-1-dev libcairo2-dev libffi-dev libxml2-dev kbd libexpat1-dev autoconf automake libtool meson cmake ssh net-tools network-manager iputils-ping rsyslog bash-completion htop resolvconf dialog vim udhcpc udhcpd git v4l-utils alsa-utils git gcc less autoconf autopoint libtool bison flex gtk-doc-tools libglib2.0-dev libpango1.0-dev libatk1.0-dev kmod pciutils libjpeg-dev
 apt -y install libpipewire-0.3-dev seatd libseat-dev
 
+# VPU libraries
+apt -y install libgirepository1.0-dev gettext liborc-0.4-dev libasound2-dev libogg-dev libtheora-dev libvorbis-dev libbz2-dev libflac-dev libgdk-pixbuf-2.0-dev libmp3lame-dev libmpg123-dev libpulse-dev libspeex-dev libtag1-dev libbluetooth-dev libusb-1.0-0-dev libcurl4-openssl-dev libssl-dev librsvg2-dev libsbc-dev libsndfile1-dev
+apt -y install libgl1-mesa-dev
+
 cp -a imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/g2d/usr/include/* /usr/include/
 cp -a imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/g2d/usr/lib/* /usr/lib/aarch64-linux-gnu/
 # gpu core
@@ -63,6 +67,30 @@ sync
 
 rm -rf imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2
 rm -rf imx-gpu-viv-6.4.11.p2.6-aarch64-bc7b6a2
+
+# vpu libs
+cp -a imx-parser/usr/include/* /usr/include/
+cp -a imx-parser/usr/lib/* /usr/lib/aarch64-linux-gnu/
+cp -a imx-parser/usr/share/doc/* /usr/share/doc/
+
+
+cp -a imx-vpu-hantro/usr/include/hantro_dec/ /usr/include/
+cp -a imx-vpu-hantro/usr/lib/* /usr/lib/aarch64-linux-gnu/
+
+cp -a imx-vpu-hantro-vc/usr/include/hantro_VC8000E_enc /usr/include/
+cp -a imx-vpu-hantro-vc/usr/lib/* /usr/lib/aarch64-linux-gnu/
+
+cp -a imx-vpuwrap/usr/include/* /usr/include/
+cp -a imx-vpuwrap/usr/lib/* /usr/lib/aarch64-linux-gnu/
+
+mkdir -p /usr/include/imx
+cp -a kernel_headers/linux/ /usr/include/imx/
+
+rm -rf imx-parser
+rm -rf imx-vpu-hantro
+rm -rf imx-vpu-hantro-vc
+rm -rf imx-vpuwrap
+rm -rf kernel_headers
 
 # build libdrm
 git clone https://github.com/nxp-imx/libdrm-imx.git
@@ -99,6 +127,43 @@ sed -i 's/G2D_HARDWARE_PXP/G2D_HARDWARE_VG/g' ./libweston/renderer-g2d/g2d-rende
 ninja -C build install
 cd -
 rm -rf weston-imx
+
+
+# Gstreamer
+git clone https://github.com/nxp-imx/gstreamer -b MM_04.09.00_2405_L6.6.y
+cd gstreamer
+meson setup build --prefix=/usr -Dintrospection=enabled -Ddoc=disabled -Dexamples=disabled -Ddbghelp=disabled -Dnls=enabled  -Dbash-completion=disabled -Dcheck=enabled -Dcoretracers=disabled -Dgst_debug=true -Dlibdw=disabled -Dtests=enabled -Dtools=enabled -Dtracer_hooks=true -Dlibunwind=disabled -Dc_args=-I/usr/include/imx
+ninja -C build install
+cd -
+rm -rf gstreamer
+
+git clone https://github.com/nxp-imx/gst-plugins-base -b MM_04.09.00_2405_L6.6.y
+cd gst-plugins-base
+meson setup build --prefix=/usr -Dalsa=enabled -Dcdparanoia=disabled -Dgl-graphene=disabled -Dgl-jpeg=disabled -Dopus=disabled -Dogg=enabled  -Dorc=enabled -Dpango=enabled -Dgl-png=enabled -Dqt5=disabled -Dtheora=enabled -Dtremor=disabled -Dvorbis=enabled -Dlibvisual=disabled -Dx11=disabled -Dxvideo=disabled -Dxshm=disabled -Dc_args=-I/usr/include/imx
+ninja -C build install
+cd -
+rm -rf gst-plugins-base
+
+git clone https://github.com/nxp-imx/gst-plugins-good -b MM_04.09.00_2405_L6.6.y
+cd gst-plugins-good
+meson setup build --prefix=/usr -Dexamples=disabled -Dnls=enabled -Ddoc=disabled -Daalib=disabled -Ddirectsound=disabled -Ddv=disabled -Dlibcaca=disabled -Doss=enabled -Doss4=disabled -Dosxaudio=disabled -Dosxvideo=disabled -Dshout2=disabled -Dtwolame=disabled -Dwaveform=disabled -Dasm=disabled -Dbz2=enabled -Dcairo=enabled -Ddv1394=disabled -Dflac=enabled -Dgdk-pixbuf=enabled -Dgtk3=disabled -Dv4l2-gudev=enabled -Djack=disabled -Djpeg=enabled -Dlame=enabled -Dpng=enabled -Dv4l2-libv4l2=disabled -Dmpg123=enabled -Dorc=enabled -Dpulse=enabled -Dqt5=disabled -Drpicamsrc=disabled -Dsoup=enabled -Dspeex=enabled -Dtaglib=enabled -Dv4l2=enabled -Dv4l2-probe=true -Dvpx=disabled -Dwavpack=disabled -Dximagesrc=disabled -Dximagesrc-xshm=disabled -Dximagesrc-xfixes=disabled -Dximagesrc-xdamage=disabled -Dc_args=-I/usr/include/imx-gst
+ninja -C build install
+cd -
+rm -rf gst-plugins-good
+
+git clone https://github.com/nxp-imx/gst-plugins-bad -b MM_04.09.00_2405_L6.6.y
+cd gst-plugins-bad
+meson setup build --prefix=/usr -Dintrospection=enabled -Dexamples=disabled -Dnls=enabled -Dgpl=disabled -Ddoc=disabled -Daes=enabled -Dcodecalpha=enabled -Ddecklink=enabled -Ddvb=enabled -Dfbdev=enabled -Dipcpipeline=enabled -Dshm=enabled -Dtranscode=enabled -Dandroidmedia=disabled -Dapplemedia=disabled -Dasio=disabled -Dbs2b=disabled -Dchromaprint=disabled -Dd3dvideosink=disabled -Dd3d11=disabled -Ddirectsound=disabled -Ddts=disabled -Dfdkaac=disabled -Dflite=disabled -Dgme=disabled -Dgs=disabled -Dgsm=disabled -Diqa=disabled -Dladspa=disabled -Dldac=disabled -Dlv2=disabled -Dmagicleap=disabled -Dmediafoundation=disabled -Dmicrodns=disabled -Dmpeg2enc=disabled -Dmplex=disabled -Dmusepack=disabled -Dnvcodec=disabled -Dopenexr=disabled -Dopenni2=disabled -Dopenaptx=disabled -Dopensles=disabled -Donnx=disabled -Dqroverlay=disabled -Dsoundtouch=disabled -Dspandsp=disabled -Dsvthevcenc=disabled -Dteletext=disabled -Dwasapi=disabled -Dwasapi2=disabled -Dwildmidi=disabled -Dwinks=disabled -Dwinscreencap=disabled -Dwpe=disabled -Dzxing=disabled -Daom=disabled -Dassrender=disabled -Davtp=disabled -Dbluez=enabled -Dbz2=enabled -Dclosedcaption=enabled -Dcurl=enabled -Ddash=enabled -Ddc1394=disabled -Ddirectfb=disabled -Ddtls=disabled -Dfaac=disabled -Dfaad=disabled -Dfluidsynth=disabled -Dgl=enabled -Dhls=enabled -Dkms=enabled -Dcolormanagement=disabled -Dlibde265=disabled -Dcurl-ssh2=disabled -Dmodplug=disabled -Dmsdk=disabled -Dneon=disabled -Dopenal=disabled -Dopencv=disabled -Dopenh264=disabled -Dopenjpeg=disabled -Dopenmpt=disabled -Dhls-crypto=openssl -Dopus=disabled -Dorc=enabled -Dresindvd=disabled -Drsvg=enabled -Drtmp=disabled -Dsbc=enabled -Dsctp=disabled -Dsmoothstreaming=enabled -Dsndfile=enabled -Dsrt=disabled -Dsrtp=disabled -Dtinyalsa=disabled -Dtinycompress=enabled -Dttml=enabled -Duvch264=enabled -Dv4l2codecs=disabled -Dva=disabled -Dvoaacenc=disabled -Dvoamrwbenc=disabled -Dvulkan=disabled -Dwayland=enabled -Dwebp=enabled -Dwebrtc=disabled -Dwebrtcdsp=disabled -Dx11=disabled -Dx265=disabled -Dzbar=disabled -Dc_args=-I/usr/include/imx
+ninja -C build install
+cd -
+rm -rf gst-plugins-bad
+
+git clone https://github.com/nxp-imx/imx-gst1.0-plugin -b MM_04.09.00_2405_L6.6.y
+cd imx-gst1.0-plugin
+meson setup build --prefix=/usr -Dplatform=MX8 -Dc_args=-I/usr/include/imx
+ninja -C build install
+cd -
+rm -rf imx-gst1.0-plugin
 
 # weston.ini installation
 mkdir -p /etc/xdg/weston/
