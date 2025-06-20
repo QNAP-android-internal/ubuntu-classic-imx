@@ -18,12 +18,16 @@ gen_pure_rootfs() {
   ARCH=arm64
   QEMU=qemu-aarch64-static
 
-  mkdir rootfs
+  if [ -d "rootfs" ]; then
+    sudo cp /usr/bin/"$QEMU" ${TOP}/rootfs/usr/bin
+  else
+    mkdir rootfs
+    echo "generate ubuntu rootfs... default version: jammy LTS"
 
-  echo "generate ubuntu rootfs... default version: jammy LTS"
-  sudo debootstrap --arch="$ARCH" --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg --verbose --foreign $DISTRO ${TOP}/rootfs
-  sudo cp /usr/bin/"$QEMU" ${TOP}/rootfs/usr/bin
-  sudo LANG=C chroot ${TOP}/rootfs /debootstrap/debootstrap --second-stage
+    sudo debootstrap --arch="$ARCH" --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg --verbose --foreign $DISTRO ${TOP}/rootfs
+    sudo cp /usr/bin/"$QEMU" ${TOP}/rootfs/usr/bin
+    sudo LANG=C chroot ${TOP}/rootfs /debootstrap/debootstrap --second-stage
+  fi
 
   if [[ $PLATFORM == "wafer-imx8mp" ]]; then
     # vivante libraries
