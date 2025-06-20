@@ -29,6 +29,12 @@ gen_pure_rootfs() {
     # vivante libraries
     sudo cp -a ${TOP}/libs_overlay/gpu_libs/imx8mp/kernel-6.6.23/imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/ ${TOP}/rootfs/
     sudo cp -a ${TOP}/libs_overlay/gpu_libs/imx8mp/kernel-6.6.23/imx-gpu-viv-6.4.11.p2.6-aarch64-bc7b6a2/ ${TOP}/rootfs/
+    # vpu libraries
+    sudo cp -a ${TOP}/libs_overlay/vpu_libs/imx8mp/kernel-6.6.23/imx-parser/ ${TOP}/rootfs/
+    sudo cp -a ${TOP}/libs_overlay/vpu_libs/imx8mp/kernel-6.6.23/imx-vpu-hantro/ ${TOP}/rootfs/
+    sudo cp -a ${TOP}/libs_overlay/vpu_libs/imx8mp/kernel-6.6.23/imx-vpu-hantro-vc/ ${TOP}/rootfs/
+    sudo cp -a ${TOP}/libs_overlay/vpu_libs/imx8mp/kernel-6.6.23/imx-vpuwrap/ ${TOP}/rootfs/
+    sudo cp -a ${TOP}/libs_overlay/vpu_libs/imx8mp/kernel-6.6.23/kernel_headers/ ${TOP}/rootfs/
     sync
     QEMU_FILE="qemu_install-weston.sh"
   else
