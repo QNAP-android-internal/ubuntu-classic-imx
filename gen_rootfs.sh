@@ -40,6 +40,7 @@ gen_pure_rootfs() {
     sudo cp -a ${TOP}/libs_overlay/vpu_libs/imx8mp/kernel-6.6.23/imx-vpuwrap/ ${TOP}/rootfs/
     sudo cp -a ${TOP}/libs_overlay/vpu_libs/imx8mp/kernel-6.6.23/kernel_headers/ ${TOP}/rootfs/
     sync
+    sudo cp -a ${TOP}/libs_overlay/wallpapers/wallpaper.png ${TOP}/rootfs/etc/
     QEMU_FILE="qemu_install-weston.sh"
   else
     QEMU_FILE="qemu_install.sh"
