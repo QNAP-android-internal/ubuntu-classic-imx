@@ -50,6 +50,9 @@ apt -y install libpipewire-0.3-dev seatd libseat-dev
 apt -y install libgirepository1.0-dev gettext liborc-0.4-dev libasound2-dev libogg-dev libtheora-dev libvorbis-dev libbz2-dev libflac-dev libgdk-pixbuf-2.0-dev libmp3lame-dev libmpg123-dev libpulse-dev libspeex-dev libtag1-dev libbluetooth-dev libusb-1.0-0-dev libcurl4-openssl-dev libssl-dev librsvg2-dev libsbc-dev libsndfile1-dev
 apt -y install libgl1-mesa-dev
 
+# Chromium libraries
+apt -y apt-get install libc++1
+
 cp -a imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/g2d/usr/include/* /usr/include/
 cp -a imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/g2d/usr/lib/* /usr/lib/aarch64-linux-gnu/
 # gpu core
@@ -164,6 +167,19 @@ meson setup build --prefix=/usr -Dplatform=MX8 -Dc_args=-I/usr/include/imx
 ninja -C build install
 cd -
 rm -rf imx-gst1.0-plugin
+
+# libjpeg installation
+wget https://sourceforge.net/projects/libjpeg-turbo/files/3.0.1/libjpeg-turbo-3.0.1.tar.gz
+tar zxvf libjpeg-turbo-3.0.1.tar.gz
+cd libjpeg-turbo-3.0.1
+mkdir -p build
+cd build
+cmake -D CMAKE_INSTALL_PREFIX=/usr/ ../
+make
+make install
+cd ../
+cd ../
+rm -rf libjpeg-turbo-3.0.1 libjpeg-turbo-3.0.1.tar.gz
 
 # weston.ini installation
 mkdir -p /etc/xdg/weston/
