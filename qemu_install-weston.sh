@@ -179,6 +179,8 @@ idle-time=0
 panel-position=none
 
 [shell]
+background-image=/etc/wallpaper.png
+background-type=scale-crop
 panel-color=0x907b6291
 panel-position=bottom
 cursor-theme=Adwaita
