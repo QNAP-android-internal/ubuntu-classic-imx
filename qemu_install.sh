@@ -212,6 +212,13 @@ echo "${COL_GREEN}Add swap partition...Default size is one-fourth of total memor
 apt -y install zram-config
 sed -i 's/totalmem\ \/\ 2/totalmem\ \/\ 4/' /usr/bin/init-zram-swapping
 
+# imx93 iw612 wifi module setting
+touch /etc/modprobe.d/blacklist-bluetooth.conf
+echo "blacklist btnxpuart" >> /etc/modprobe.d/blacklist-bluetooth.conf
+touch /etc/modules-load.d/nxp-wifi.conf
+echo "moal" >> /etc/modules-load.d/nxp-wifi.conf
+echo "mlan" >> /etc/modules-load.d/nxp-wifi.conf
+
 mkdir -p /lib/modules/
 
 # clear the patches
