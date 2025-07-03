@@ -44,6 +44,10 @@ apt -y install bash-completion ifupdown resolvconf alsa-utils gpiod cloud-utils 
 apt -y install libpolkit-gobject-1-0:armhf libraspberrypi0:armhf libraspberrypi-dev:armhf libraspberrypi-bin:armhf libgles-dev:armhf libegl-dev:armhf
 apt -y install libegl1-mesa libgail-common libgail18 libgtk2.0-0 libgtk2.0-bin libgtk2.0-common libpango1.0-0
 
+# chromium-browser
+add-apt-repository ppa:xtradeb/apps -y
+apt -y install chromium
+
 # for multiple languages
 apt -y install language-selector-gnome
 if [[ "$LANGUAGE" == "zh-hant" ]]; then
