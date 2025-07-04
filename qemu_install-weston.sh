@@ -51,7 +51,7 @@ apt -y install libgirepository1.0-dev gettext liborc-0.4-dev libasound2-dev libo
 apt -y install libgl1-mesa-dev
 
 # Chromium libraries
-apt -y apt-get install libc++1
+apt -y install libc++1
 
 cp -a imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/g2d/usr/include/* /usr/include/
 cp -a imx-gpu-g2d-6.4.11.p2.6-aarch64-bc7b6a2/g2d/usr/lib/* /usr/lib/aarch64-linux-gnu/
