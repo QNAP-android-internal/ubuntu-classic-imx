@@ -58,6 +58,10 @@ elif [[ "$LANGUAGE" == "japanese" ]]; then
 	apt -y install language-pack-ja language-pack-gnome-ja fonts-noto-cjk fonts-takao
 	locale-gen ja_JP.UTF-8
 	update-locale LANG=ja_JP.UTF-8
+elif [[ "$LANGUAGE" == "korean" ]]; then
+    apt -y install language-pack-ko language-pack-gnome-ko fonts-noto-cjk fonts-unfonts-core
+    locale-gen ko_KR.UTF-8
+    update-locale LANG=ko_KR.UTF-8
 fi
 
 # X11 setting
