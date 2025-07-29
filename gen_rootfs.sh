@@ -51,6 +51,20 @@ gen_pure_rootfs() {
   sync
   sudo rm -rf ${TOP}/rootfs/usr/bin/${QEMU_FILE}
 
+
+  # post-process
+  if [[ $PLATFORM == "wafer-imx8mp" ]]; then
+    if [[ -d "117.0.5938.132" ]]; then
+      sudo cp -a 117.0.5938.132/usr/bin/chromedriver ${TOP}/rootfs/usr/bin/
+      sudo cp -a 117.0.5938.132/usr/lib/chromium/ ${TOP}/rootfs/usr/lib/aarch64-linux-gnu/
+      sudo cp -a 117.0.5938.132/usr/share/* ${TOP}/rootfs/usr/share/
+      cd ${TOP}/rootfs/usr/bin/
+      sudo ln -sn /usr/lib/aarch64-linux-gnu/chromium/chromium-wrapper chromium
+      cd -
+    fi
+  fi
+
+
   cd ${TOP}/rootfs
   sudo tar --exclude='./dev/*' --exclude='./lost+found' --exclude='./mnt/*' --exclude='./media/*' --exclude='./proc/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./tmp/*' --numeric-owner -czpvf ../rootfs.tgz .
   cd ${TOP}
