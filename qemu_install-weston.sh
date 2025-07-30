@@ -222,6 +222,15 @@ touchscreen_calibrator=true
 [screen-share]
 command=/usr/bin/weston --backend=rdp-backend.so --shell=fullscreen-shell.so --no-clients-resize
 #start-on-startup=true
+
+[launcher]
+icon=/usr/share/weston/terminal.png
+path=/usr/bin/weston-terminal
+
+[launcher]
+icon=/usr/share/icons/hicolor/32x32/apps/chromium.png
+path=/usr/bin/chromium  --alsa-output-device=plug:dmix --no-sandbox
+
 END
 
 cat <<END > /lib/systemd/system/rc-local.service
