@@ -95,6 +95,21 @@ rm -rf imx-vpu-hantro-vc
 rm -rf imx-vpuwrap
 rm -rf kernel_headers
 
+# npu libraries
+apt -y install python3-pip
+python3.12 -m pip install --break-system-packages numpy==1.26.4
+python3.12 -m pip install --break-system-packages pillow==10.3.0
+python3.12 -m pip install --break-system-packages opencv-python==4.6.0.66
+
+mv libNNVXCBinary-evis2.so /usr/lib/aarch64-linux-gnu/
+mv libtensorflow-lite.so.2.15.0 /usr/lib/aarch64-linux-gnu/
+mv libtim-vx.so /usr/lib/aarch64-linux-gnu/
+mv libvx_delegate.so /usr/lib/aarch64-linux-gnu/
+mkdir -p /lib/python3.12/dist-packages/
+mv python-libs/* /lib/python3.12/dist-packages/
+rm -rf python-libs/
+sync
+
 # build libdrm
 git clone https://github.com/nxp-imx/libdrm-imx.git
 cd libdrm-imx
