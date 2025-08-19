@@ -3,11 +3,14 @@
 # Written by: Wig Cheng  <onlywig@gmail.com>                       #
 ######################################################################
 
-BUILD_STEPS := rootfs
+BUILD_STEPS := u-boot kernel rootfs image
 
 all: build
 
+pre-u-boot:
+pre-kernel:
 pre-rootfs:
+pre-image:
 
 define BUILD_STEPS_TEMPLATE
 build-$(1): pre-$(1)
@@ -27,6 +30,12 @@ clean: $(addprefix clean-,$(BUILD_STEPS))
 
 distclean: $(addprefix distclean-,$(BUILD_STEPS))
 
+u-boot: build-u-boot
+
+kernel: build-kernel
+
 rootfs: build-rootfs
 
-.PHONY: all build clean distclean rootfs
+image: build-image
+
+.PHONY: all build clean distclean u-boot kernel rootfs
