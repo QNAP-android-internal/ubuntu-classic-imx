@@ -22,7 +22,7 @@ endif
 
 	@echo "image generating..."
 	sudo ./gen_image.sh $(TARGET)
-	@mv test.img $(OUTPUT_DIR)/$(DEFAULT_IMAGE)
+	@sudo mv test.img $(OUTPUT_DIR)/$(DEFAULT_IMAGE)
 
 build: build-image
 
