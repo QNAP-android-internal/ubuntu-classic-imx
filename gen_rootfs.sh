@@ -43,7 +43,8 @@ gen_pure_rootfs() {
     sudo cp -a ${TOP}/libs_overlay/wallpapers/wallpaper.png ${TOP}/rootfs/etc/
     # npu libraries
     sudo cp -a ${TOP}/libs_overlay/machine_learning/imx8mp/noble/arm64/proprietary/* ${TOP}/rootfs/
-
+    # growpart
+    sudo cp -a ${TOP}/libs_overlay/bin/tn-growpart-helper ${TOP}/rootfs/usr/sbin/
     QEMU_FILE="qemu_install-weston.sh"
   else
     QEMU_FILE="qemu_install.sh"
