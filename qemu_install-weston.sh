@@ -285,7 +285,27 @@ weston &
 export WAYLAND_DISPLAY=wayland-1
 END
 
+cat <<END > /lib/systemd/system/tn-growpart-helper_wayland.service
+[Unit]
+Description=Resize root filesystem to fit available disk space
+After=systemd-remount-fs.service weston.service
+Wants=weston.service
+DefaultDependencies=no
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+StandardOutput=journal+console
+ExecStart=-/usr/sbin/tn-growpart-helper
+ExecStartPost=/bin/systemctl disable tn-growpart-helper_wayland.service
+ExecStop=/sbin/reboot
+[Install]
+WantedBy=multi-user.target
+END
+
 systemctl enable rc-local
+chmod a+x /usr/sbin/tn-growpart-helper
+systemctl enable tn-growpart-helper_wayland.service
 
 # let network-manager handle all network interfaces
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
