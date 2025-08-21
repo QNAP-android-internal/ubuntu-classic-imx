@@ -202,7 +202,7 @@ touch /etc/xdg/weston/weston.ini
 cat <<END > /etc/xdg/weston/weston.ini
 [core]
 #gbm-format=argb8888
-use-g2d=true
+use-g2d=false
 repaint-window=16
 idle-time=0
 #xwayland=true
