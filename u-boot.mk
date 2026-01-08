@@ -30,7 +30,7 @@ endif
 	mkdir -p $(UBOOT_DIR)
 	if [ ! -f $(UBOOT_DIR)/uboot-imx/Makefile ] ; then \
 		curl -L $(UBOOT_ARCHIVE) | tar xz && \
-		mv uboot-imx-* $(UBOOT_DIR)/uboot-imx ; \
+		mv uboot-imx-* $(UBOOT_DIR)/uboot-imx; \
 	fi
 
 	$(MAKE) ARCH=arm CROSS_COMPILE=${CC} -C $(UBOOT_DIR)/uboot-imx $(UBOOT_DEFCONFIG)
