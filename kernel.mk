@@ -12,7 +12,7 @@ $(eval KERNEL_ARCHIVE := https://github.com/QNAP-android-internal/kernel_imx/arc
 $(eval ARCH := arm64)
 else ifeq ($(PLATFORM),frdm-imx93)
 KERNEL_DEFCONFIG := iei_imx8_defconfig
-$(eval KERNEL_COMMIT  := 8c54a1745990a9245ac52ce70ac19bd5b829a7a8)
+$(eval KERNEL_COMMIT  := af26215f8295919821a38d2288df4c76e9ffa216)
 $(eval KERNEL_ARCHIVE := https://github.com/QNAP-android-internal/kernel_imx/archive/$(KERNEL_COMMIT).tar.gz)
 $(eval ARCH := arm64)
 endif
