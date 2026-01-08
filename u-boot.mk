@@ -22,9 +22,10 @@ ifeq ($(PLATFORM),wafer-imx8mp)
 	$(eval UBOOT_DEFCONFIG := imx8mp_b643_ppc_defconfig)
 	$(eval ATF_OPTION := imx8mp-b643-ppc)
 else ifeq ($(PLATFORM),frdm-imx93)
-	$(eval UBOOT_COMMIT := 40c8a907141d32b28895c69b8e0a8ff95313bda4)
+	$(eval UBOOT_COMMIT := ca66497fc3148daf6468492872378b4722ee009f)
 	$(eval UBOOT_ARCHIVE := https://github.com/QNAP-android-internal/uboot-imx/archive/$(UBOOT_COMMIT).tar.gz)
-	$(eval UBOOT_DEFCONFIG := edm-imx6_spl_defconfig)
+	$(eval UBOOT_DEFCONFIG := imx93_lite93_evb_defconfig)
+	$(eval ATF_OPTION := imx93-11x11-frdm)
 endif
 
 	mkdir -p $(UBOOT_DIR)
