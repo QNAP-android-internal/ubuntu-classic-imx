@@ -1,2 +1,2 @@
-__version__ = '2.16.2'
-__git_version__ = '0.6.0-159573-gad08fc3b5af'
+__version__ = '2.19.0'
+__git_version__ = 'lf-6.12.34-2.1.0'
