@@ -36,7 +36,8 @@ if [[ "$1" == "wafer-imx8mp" ]]; then
   sudo cp -rv ./output/kernel/kernel_imx/arch/arm64/boot/dts/freescale/overlays/imx8mp-b643-ppc-uart-rs422.dtb mnt/
   sudo cp -rv ./output/kernel/kernel_imx/arch/arm64/boot/dts/freescale/overlays/imx8mp-b643-ppc-uart-rs485.dtb mnt/
 elif [[ "$1" == "frdm-imx93" ]]; then
-  sudo cp -rv ./output/kernel/kernel_imx/arch/arm64/boot/dts/freescale/imx93-11x11-frdm.dtb mnt/
+  sudo cp -rv ./output/kernel/kernel_imx/arch/arm64/boot/dts/freescale/imx93-lite93-evb.dtb mnt/
+  sudo cp -rv ./output/kernel/kernel_imx/arch/arm64/boot/dts/freescale/imx93-lite93-evb-*.dtbo mnt/
 fi
 
 sudo umount mnt
@@ -49,10 +50,14 @@ sudo cp -rv ./output/kernel/kernel_imx/modules/lib/modules/* mnt/lib/modules/
 
 sudo umount mnt
 
+bootloader_offset=32
+
 if [[ "$1" == "wafer-imx8mp" ]]; then
-  bootloader_offset=32
-fi
 sudo dd if=./output/u-boot/uboot-imx/imx-mkimage/iMX8M/flash.bin of="$loop_dev" bs=1k seek="$bootloader_offset" conv=fsync
+elif [[ "$1" == "frdm-imx93" ]]; then
+sudo dd if=./output/u-boot/uboot-imx/imx-mkimage/iMX93/flash.bin of="$loop_dev" bs=1k seek="$bootloader_offset" conv=fsync
+fi
+
 sync
 
 rm -rf mnt
