@@ -119,7 +119,7 @@ if [[ "$DISTRO" == "jammy" ]]; then
 else
     #NPU necessary packages and libs
     add-apt-repository -y ppa:deadsnakes/ppa
-    apt -y install python3.10 python3.10-dev python3-pip curl
+    apt -y install python3.10 python3.10-dev python3.13 python3.13-dev python3-pip curl
     apt -y install build-essential libjpeg-dev zlib1g-dev libopenjp2-7-dev libtiff-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev libimagequant-dev libraqm-dev
 
     python3.10 -m pip install --break-system-packages numpy==1.21.5
@@ -130,13 +130,13 @@ else
     apt -y install git
     git clone https://github.com/nxp-imx/ethos-u-vela.git
     cd ethos-u-vela
-    git checkout lf-6.6.36_2.1.0
-    python3.12 -m pip install --break-system-packages .
+    git checkout lf-6.12.34_2.1.0
+    python3.13 -m pip install --break-system-packages .
     cd -
     rm -rf ethos-u-vela
 
-    python3.12 -m pip install --break-system-packages numpy==1.26.4
-    python3.12 -m pip install --break-system-packages pillow==10.3.0
+    python3.13 -m pip install --break-system-packages numpy==2.2.3
+    python3.13 -m pip install --break-system-packages pillow==11.1.0
 
 
     wget https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/3X/6/3/63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg
