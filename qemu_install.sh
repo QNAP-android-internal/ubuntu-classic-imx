@@ -144,6 +144,9 @@ else
 
     wget https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/3X/6/3/63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg
     mv 63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg /home/ubuntu/wallpaper.jpeg
+    sed -i 's|^Wallpaper=.*|Wallpaper=/home/ubuntu/wallpaper.jpeg|' /etc/xdg/pcmanfm-qt/lxqt/settings.conf
+    sync
+
 fi
 
 rm -rf /usr/share/xsessions/fluxbox.desktop
