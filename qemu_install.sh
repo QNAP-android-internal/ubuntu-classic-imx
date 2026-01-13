@@ -138,6 +138,9 @@ else
     python3.13 -m pip install --break-system-packages numpy==2.2.3
     python3.13 -m pip install --break-system-packages pillow==11.1.0
 
+    # download imx93 npu firmware file
+    wget https://github.com/nxp-imx/ethos-u-firmware/raw/refs/heads/lf-6.12.34_2.1.0/ethosu_firmware
+    mv ethosu_firmware /lib/firmware/
 
     wget https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/3X/6/3/63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg
     mv 63c50fde4f2fe64d161e43f4d7588049a208b524.jpeg /home/ubuntu/wallpaper.jpeg
