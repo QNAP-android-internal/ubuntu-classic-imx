@@ -14,8 +14,13 @@ echo "${COL_GREEN}creating ubuntu sudoer account...${COL_NORMAL}"
 cd /
 echo $PLATFORM > /etc/hostname
 echo -e "127.0.1.1\t $PLATFORM" >> /etc/hosts
-echo -e "nameserver\t8.8.8.8" >> /etc/resolv.conf
-echo -e "nameserver\t8.8.4.4" >> /etc/resolv.conf
+
+mkdir -p /etc/systemd/resolved.conf.d
+cat <<DNSCONF > /etc/systemd/resolved.conf.d/dns.conf
+[Resolve]
+DNS=8.8.8.8 8.8.4.4
+FallbackDNS=1.1.1.1 1.0.0.1
+DNSCONF
 
 (echo "root"; echo "root";) | passwd
 (echo "ubuntu"; echo "ubuntu"; echo;) | adduser ubuntu
