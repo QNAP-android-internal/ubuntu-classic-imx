@@ -142,6 +142,7 @@ else
 
     python3.13 -m pip install --break-system-packages numpy==2.2.3
     python3.13 -m pip install --break-system-packages pillow==11.1.0
+    python3.13 -m pip install --break-system-packages opencv-python
 
     # download imx93 npu firmware file
     wget https://github.com/nxp-imx/ethos-u-firmware/raw/refs/heads/lf-6.12.34_2.1.0/ethosu_firmware
