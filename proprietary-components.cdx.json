@@ -1,0 +1,220 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "firmware",
+      "name": "ubuntu-classic-imx",
+      "description": "NXP i.MX ARM64 proprietary components (not detected by automated scanners)"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "imx-gpu-g2d",
+      "version": "6.4.11.p2.6",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "i.MX GPU 2D graphics library",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "imx-gpu-viv",
+      "version": "6.4.11.p2.6",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "Vivante GPU core library (OpenGL ES, Vulkan, OpenCL)",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "imx-parser",
+      "version": "4.9.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "i.MX multimedia parser library",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "imx-vpu-hantro",
+      "version": "1.0.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "Hantro VPU decoder library",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "imx-vpu-hantro-vc",
+      "version": "1.0.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "Hantro VC8000E VPU encoder library",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "imx-vpuwrap",
+      "version": "1.0.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "i.MX VPU wrapper library",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "libNNVXCBinary-evis2",
+      "version": "1.0.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "NPU neural network acceleration library (imx8mp)",
+      "scope": "optional",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "libtensorflow-lite",
+      "version": "2.15.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "TensorFlow Lite runtime (NXP prebuilt for imx8mp)",
+      "scope": "optional",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "libtim-vx",
+      "version": "1.0.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "TIM-VX tensor inference engine",
+      "scope": "optional",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "libvx_delegate",
+      "version": "1.0.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "VeriSilicon OpenVX delegate for TFLite",
+      "scope": "optional",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" }
+      ]
+    },
+    {
+      "type": "firmware",
+      "name": "ethosu_firmware",
+      "version": "lf-6.12.34_2.1.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "Arm Ethos-U NPU firmware for i.MX93",
+      "scope": "optional",
+      "properties": [
+        { "name": "platform", "value": "imx93" },
+        { "name": "source", "value": "https://github.com/nxp-imx/ethos-u-firmware" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "libdrm-imx",
+      "version": "2.4.0",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "NXP fork of libdrm with Vivante support",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" },
+        { "name": "source", "value": "https://github.com/nxp-imx/libdrm-imx" }
+      ]
+    },
+    {
+      "type": "application",
+      "name": "weston-imx",
+      "version": "12.0.4",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "NXP fork of Weston compositor with G2D renderer",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" },
+        { "name": "source", "value": "https://github.com/nxp-imx/weston-imx" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "wayland-protocols-imx",
+      "version": "1.32",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "NXP fork of Wayland protocols",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" },
+        { "name": "source", "value": "https://github.com/nxp-imx/wayland-protocols-imx" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "gstreamer (NXP fork)",
+      "version": "MM_04.09.00_2405_L6.6.y",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "NXP GStreamer multimedia framework fork",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" },
+        { "name": "source", "value": "https://github.com/nxp-imx/gstreamer" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "imx-gst1.0-plugin",
+      "version": "MM_04.09.00_2405_L6.6.y",
+      "supplier": { "name": "NXP Semiconductors" },
+      "description": "NXP i.MX GStreamer plugins",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" },
+        { "name": "source", "value": "https://github.com/nxp-imx/imx-gst1.0-plugin" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ethos-u-vela",
+      "version": "lf-6.12.34_2.1.0",
+      "supplier": { "name": "NXP Semiconductors / Arm" },
+      "description": "Arm Ethos-U Vela compiler for NPU model optimization",
+      "scope": "optional",
+      "properties": [
+        { "name": "platform", "value": "imx93" },
+        { "name": "source", "value": "https://github.com/nxp-imx/ethos-u-vela" }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "libjpeg-turbo",
+      "version": "3.0.1",
+      "supplier": { "name": "libjpeg-turbo Project" },
+      "description": "JPEG image codec (source-built)",
+      "scope": "required",
+      "properties": [
+        { "name": "platform", "value": "imx8mp" },
+        { "name": "source", "value": "https://sourceforge.net/projects/libjpeg-turbo/" }
+      ]
+    }
+  ]
+}
