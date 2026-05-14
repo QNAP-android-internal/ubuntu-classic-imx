@@ -124,10 +124,29 @@ if __name__ == '__main__':
   output_data = interpreter.get_tensor(output_details[0]['index'])
   results = np.squeeze(output_data)
 
+  # Detect output format from quantization scale.
+  # Softmax-already-applied (e.g. MobileNet v1 quant): scale ~= 1/256, uint8 maps to [0,1].
+  # Logits output (e.g. MobileNet v2 quant): scale much larger; dequant + softmax needed.
+  out_scale, out_zp = output_details[0]['quantization']
+
+  softmax_scale_threshold = 0.01
+  needs_softmax = (not floating_model) and out_scale >= softmax_scale_threshold
+
+  if needs_softmax:
+    deq = (results.astype(np.float32) - out_zp) * out_scale
+    exps = np.exp(deq - deq.max())
+    results = exps / exps.sum()
+    score_note = '[logits->softmax]'
+  elif floating_model:
+    score_note = '[fp32]'
+  else:
+    score_note = '[uint8 prob /255]'
+
   top_k = results.argsort()[-5:][::-1]
   labels = load_labels(args.label_file)
+  print('output mode: {}  scale={:.6f} zp={}'.format(score_note, out_scale, out_zp))
   for i in top_k:
-    if floating_model:
+    if floating_model or needs_softmax:
       print('{:08.6f}: {}'.format(float(results[i]), labels[i]))
     else:
       print('{:08.6f}: {}'.format(float(results[i] / 255.0), labels[i]))
