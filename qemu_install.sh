@@ -143,6 +143,8 @@ else
     git clone https://github.com/nxp-imx/ethos-u-vela.git
     cd ethos-u-vela
     git checkout lf-6.12.34_2.1.0
+
+    export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc)
     python3.13 -m pip install --break-system-packages .
     cd -
     rm -rf ethos-u-vela
