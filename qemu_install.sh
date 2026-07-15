@@ -98,6 +98,10 @@ ctl.!default {
 }
 END
 
+# frontend so it never prompts.
+export DEBIAN_FRONTEND=noninteractive
+echo "slim shared/default-x-display-manager select slim" | debconf-set-selections
+
 # GUI desktop support
 if [[ "$DISTRO" == "jammy" ]]; then
     apt -y install xfce4
@@ -110,6 +114,9 @@ apt -y install slim
 # auto login
 sed -i 's/#auto_login\s\+no/auto_login          yes/' /etc/slim.conf
 sed -i 's/#default_user\s\+simone/default_user        ubuntu/' /etc/slim.conf
+
+# force slim as the default DM regardless of install order / preseed name matching
+echo "/usr/bin/slim" > /etc/X11/default-display-manager
 
 if [[ "$DISTRO" == "jammy" ]]; then
     # NPU necessary libs
