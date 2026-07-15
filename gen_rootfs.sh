@@ -50,6 +50,17 @@ gen_pure_rootfs() {
     QEMU_FILE="qemu_install.sh"
   fi
 
+  # frdm-imx93: install NXP IW612 Wi-Fi/BT firmware into the target rootfs.
+  if [[ $PLATFORM == "frdm-imx93" ]]; then
+    IW612_FW_BRANCH=lf-6.18.20_2.0.0
+    if [ ! -d "${TOP}/imx-firmware" ]; then
+      git clone --depth 1 -b ${IW612_FW_BRANCH} https://github.com/nxp-imx/imx-firmware.git ${TOP}/imx-firmware
+    fi
+    sudo mkdir -p ${TOP}/rootfs/lib/firmware/nxp
+    sudo cp -a ${TOP}/imx-firmware/FwImage_IW612_SD/*.bin.se ${TOP}/rootfs/lib/firmware/nxp/
+    sync
+  fi
+
   sudo cp ${TOP}/${QEMU_FILE} ${TOP}/rootfs/usr/bin/
   sudo LANG=C chroot ${TOP}/rootfs /bin/bash -c "chmod a+x /usr/bin/${QEMU_FILE}; /usr/bin/${QEMU_FILE} $PLATFORM $DISTRO $LANGUAGE"
   sync
